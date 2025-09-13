@@ -21,11 +21,11 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore GSI_Manage_BackEnd/GSI_Manage.sln
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore GSI_Manage_BackEnd/GSI_Manage.sln
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal GSI_Manage_BackEnd/GSI_Manage.sln
     - name: Build Docker image
       run: docker build -t edrineviper/web_api1:${{ github.sha }} GSI_Manage_BackEnd/
     - name: Log in to Docker Hub
