@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  gsi-manage-backend:
+    build: .
+    ports:
+      - "8080:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=GSI_Manage;User Id=sa;Password=YourStrong!Passw0rd;
+    depends_on:
+      - sqlserver
+    networks:
+      - gsi-network
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong!Passw0rd
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - gsi-network
+
+volumes:
+  sqlserver_data:
+
+networks:
+  gsi-network:
+    driver: bridge
